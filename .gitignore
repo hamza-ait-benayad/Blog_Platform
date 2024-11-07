@@ -122,5 +122,11 @@ nb-configuration.xml
 # Visual Studio Code
 .vscode/
 
+# Tailwind CSS
+node_modules/
+build/
+dist/
+.tailwindcss-cache
+
 /results/
 /phpunit*.xml
