@@ -1,11 +1,13 @@
 module.exports = {
   content: [
-    "./app/Views/**/*.php", // Tailwind will look for class names in your PHP view files
+    "./app/Views/**/*.php", 
+    "./node_modules/flowbite/**/*.js"
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#edc7a0","600":"#e4c19d","700":"#d9a46f","800":"#1e40af","900":"#1e3a8a","950":"#172554"}
+        primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#edc7a0","600":"#FFF2E1","700":"#EAD8C0","800":"#D1BB9E","900":"#A79277","950":"#172554"}
       }
     },
     fontFamily: {
@@ -45,5 +47,8 @@ module.exports = {
   ]
     }
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin'),
+    require('flowbite-typography'),
+  ],
 }

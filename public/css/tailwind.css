@@ -1,6 +1,5 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.name{
-  background-color: #edc7a0;
-}
+
+@import 'flowbite-typography';
