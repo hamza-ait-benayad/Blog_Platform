@@ -8,49 +8,43 @@ class AuthController extends Controller
 {
     public function register()
     {
-        helper(['form', 'url']); // Added 'url' helper for redirection.
-        $data = [];
-        
-        if ($this->request->getMethod() == 'post') {
-            $rules = [
-                'username' => 'required|min_length[3]|max_length[20]',
-                'email'    => 'required|min_length[6]|max_length[50]|valid_email|is_unique[users.email]',
-                'password' => 'required|min_length[8]',
-                'password_confirm' => 'matches[password]'
-            ];
+        $model = new UserModel();
 
-            if ($this->validate($rules)) {
-                $model = new UserModel();
-                $model->save([
-                    'username' => $this->request->getVar('username'),
-                    'email'    => $this->request->getVar('email'),
-                    'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT)
-                ]);
-                return redirect()->to('/auth/login')->with('success', 'Registration successful. You can now log in.');
+        if ($this->request->getMethod() == 'POST') {
+            $data = [
+                'username' => $this->request->getPost('username'),
+                'email'    => $this->request->getPost('email'),
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT),
+            ];
+    
+            if ($model->insert($data)) {
+                return redirect()->to('/auth/login')->with('success', 'Inscription réussie !');
             } else {
-                $data['validation'] = $this->validator;
+                return redirect()->back()->with('errors', $model->errors());
             }
         }
-
-        return view('auth/register', $data); // Changed echo to return
+        return view('auth/register');
     }
+    
 
     public function login()
     {
-        helper(['form', 'url']); // Added 'url' helper for redirection.
-        $data = [];
-        
-        if ($this->request->getMethod() == 'post') {
+        $model = new UserModel();
+
+        if ($this->request->getMethod() == 'POST') {
+
             $rules = [
                 'email'    => 'required|min_length[6]|max_length[50]|valid_email',
                 'password' => 'required|min_length[8]',
             ];
+            $data = [
+                'email'    => $this->request->getVar('email'),
+                'password' => $this->request->getVar('password'),
+            ];
 
-            if ($this->validate($rules)) {
-                $model = new UserModel();
-                $user = $model->where('email', $this->request->getVar('email'))->first();
+                $user = $model->where('email', $data['email'])->first();
                 
-                if ($user && password_verify($this->request->getVar('password'), $user['password'])) {
+                if ($user && password_verify($data['password'], $user['password'])) {
                     // Set session
                     $sessionData = [
                         'user_id'   => $user['id'],
@@ -62,14 +56,13 @@ class AuthController extends Controller
                     
                     return redirect()->to('/dashboard')->with('success', 'You are logged in.');
                 } else {
-                    $data['error'] = 'Invalid email or password';
+                   // $data['error'] = 'Invalid email or password';
+                    return redirect()->back()->with('errors', ["Invalid email or password"]);
                 }
-            } else {
-                $data['validation'] = $this->validator;
-            }
+        
         }
-
-        return view('auth/login', $data); // Changed echo to return
+        log_message('info',$this->request->getMethod() == 'POST');
+        return view('auth/login');
     }
 
     public function logout()
