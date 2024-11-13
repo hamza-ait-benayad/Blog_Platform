@@ -7,7 +7,7 @@
     <link rel="icon" href="<?= base_url('favicon.svg') ?>" type="image/svg">
     <link href="<?= base_url(); ?>css/tailwind.output.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-900">
     <?= $this->renderSection('content') ?>
 </body>
 </html>
