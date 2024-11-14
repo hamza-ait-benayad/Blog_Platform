@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\BlogModel;
 use App\Models\UserModel;
 use CodeIgniter\Controller;
 
@@ -30,6 +31,7 @@ class AuthController extends Controller
     public function login()
     {
         $model = new UserModel();
+        
 
         if ($this->request->getMethod() == 'POST') {
 
@@ -53,8 +55,8 @@ class AuthController extends Controller
                         'logged_in' => true
                     ];
                     session()->set($sessionData);
-                    
-                    return redirect()->to('/dashboard')->with('success', 'You are logged in.');
+                
+                    return redirect()->to('/')->with('success', 'You are logged in.');
                 } else {
                    // $data['error'] = 'Invalid email or password';
                     return redirect()->back()->with('errors', ["Invalid email or password"]);

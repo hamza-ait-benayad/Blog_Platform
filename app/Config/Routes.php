@@ -14,11 +14,15 @@ $routes->get('auth/logout', 'AuthController::logout');
 // $route->post('auth/forgot-password', 'AuthController::forgotPassword');
 // $route->get('auth/reset-password', 'AuthController::resetPassword');
 // $route->post('auth/reset-password', 'AuthController::resetPassword');
-// $routes->get('dashboard', 'DashboardController::index');
+  $routes->get('/', 'DashboardController::index', ['filter' => 'auth']);
 
-$routes->group('dashboard', ['filter' => 'auth'], function($routes) {
-  $routes->get('/', 'DashboardController::index');
-  $routes->get('blogs/create', 'BlogController::create');
-  $routes->post('blogs/store', 'BlogController::store');
+$routes->group('blog', ['filter' => 'auth'], function($routes) {
+  $routes->get('create', 'BlogController::create');
+  $routes->post('store', 'BlogController::store');
+  // $routes->get('/edit/(:num)', 'BlogController::edit/$1');
+  // $routes->post('/update/(:num)', 'BlogController::update/$1');
+  // $routes->get('/delete/(:num)', 'BlogController::delete/$1');
+  // $routes->get('/(:num)', 'BlogController::show/$1');
 });
+
 
