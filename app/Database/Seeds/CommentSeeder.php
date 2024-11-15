@@ -10,14 +10,24 @@ class CommentSeeder extends Seeder
     {
         $data = [
             [
-                'content'   => 'Great article!',
-                'user_id'   => 1, // Assuming user with ID 1 exists
-                'blog_id'   => 1, // Commenting on the first blog
+                'comment'   => 'Great article!',
+                'user_id'   => 13, // Assuming user with ID 1 exists
+                'blog_id'   => 5, // Commenting on the first blog
             ],
             [
-                'content'   => 'Very informative, thanks!',
+                'comment'   => 'Very informative, thanks!',
                 'user_id'   => 2, // Assuming user with ID 2 exists
-                'blog_id'   => 1,
+                'blog_id'   => 6,
+            ],
+            [
+                'comment'   => 'GG',
+                'user_id'   => 1, // Assuming user with ID 1 exists
+                'blog_id'   => 5, // Commenting on the first blog
+            ],
+            [
+                'comment'   => 'Goooooooooooooooooood!',
+                'user_id'   => 13, // Assuming user with ID 2 exists
+                'blog_id'   => 6,
             ],
             // Add more comments if needed
         ];
