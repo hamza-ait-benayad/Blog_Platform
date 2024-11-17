@@ -8,6 +8,8 @@
     <link href="<?= base_url(); ?>css/tailwind.output.css" rel="stylesheet">
 </head>
 <body class="bg-gray-900">
+    <main>
     <?= $this->renderSection('content') ?>
+    </main>
 </body>
 </html>
