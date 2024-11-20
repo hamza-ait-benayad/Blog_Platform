@@ -3,3 +3,18 @@
 @tailwind utilities;
 
 @import 'flowbite-typography';
+
+/* Your custom styles here */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+@layer components {
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
