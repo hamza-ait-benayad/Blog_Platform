@@ -26,30 +26,30 @@
                         </div>
                     </div>
                     <!-- manage blog -->
-                        <?php if ($blog['user_id'] === session('user_id')): ?>
-                    <div>
-                        <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" class="inline-flex items-center p-2 text-sm font-medium text-center rounded-lg focus:ring-4 focus:outline-none text-white bg-gray-800 hover:bg-gray-700 focus:ring-gray-600" type="button">
-                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-                            </svg>
-                        </button>
-                        <div id="dropdownDotsHorizontal" class="z-10 hidden mt-2 absolute rounded-lg shadow w-44 bg-gray-700 divide-gray-600">
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
-                                <li>
-                                    <a href="#" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Earnings</a>
-                                </li>
-                            </ul>
-                            <div class="py-2">
-                                <a href="#" class="block px-4 py-2 text-sm  hover:bg-gray-600 text-gray-200 hover:text-white">Separated link</a>
+                    <?php if ($blog['user_id'] === session('user_id')): ?>
+                        <div>
+                            <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" class="inline-flex items-center p-2 text-sm font-medium text-center rounded-lg focus:ring-4 focus:outline-none text-white bg-gray-800 hover:bg-gray-700 focus:ring-gray-600" type="button">
+                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                    <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                </svg>
+                            </button>
+                            <div id="dropdownDotsHorizontal" class="z-10 hidden mt-2 absolute rounded-lg shadow w-44 bg-gray-700 divide-gray-600">
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
+                                    <li>
+                                        <a href="#" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Settings</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Earnings</a>
+                                    </li>
+                                </ul>
+                                <div class="py-2">
+                                    <a href="#" class="block px-4 py-2 text-sm  hover:bg-gray-600 text-gray-200 hover:text-white">Separated link</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     <?php endif; ?>
                 </address>
                 <h1 class="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl text-white"><?= esc($blog['title']); ?></h1>
@@ -59,12 +59,12 @@
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-lg lg:text-lg font-bold text-gray-300">Discussion (<?= esc($blog['NbComment']) ?>)</h2>
                 </div>
-                <form class="mb-6">
+                <form class="mb-6" method="post" action="<?= base_url('comments/store/' . $blog['id']) ?>">
                     <div class="py-2 px-4 mb-4 rounded-lg rounded-t-lg bg-gray-800 ">
                         <label for="comment" class="sr-only">Your comment</label>
                         <textarea id="comment" rows="6"
                             class="px-0 w-full text-sm text-whiteborder-0 focus:ring-0 border-none  placeholder-gray-400 bg-gray-800"
-                            placeholder="Write a comment..." required></textarea>
+                            placeholder="Write a comment..." name="comment" required></textarea>
                     </div>
                     <button type="submit"
                         class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-black bg-primary-500 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-900">
@@ -85,32 +85,36 @@
                                         <p class="text-sm text-gray-600 "><time pubdate datetime="2022-02-08"
                                                 title="February 8th, 2022"><?= esc($comment['created_at']); ?></time></p>
                                     </div>
-                                    <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
-                                        class="inline-flex items-center p-2 text-sm font-medium text-center  rounded-lg ocus:ring-4 focus:outline-none  text-gray-400 bg-gray-900 hover:bg-gray-700 focus:ring-gray-600"
-                                        type="button">
-                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                                            <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                                        </svg>
-                                        <span class="sr-only">Comment settings</span>
-                                    </button>
-                                    <div id="dropdownComment1"
-                                        class="hidden z-10 w-36 rounded divide-y shadow bg-gray-700 divide-gray-600">
-                                        <ul class="py-1 text-sm  text-gray-200"
-                                            aria-labelledby="dropdownMenuIconHorizontalButton">
-                                            <li>
-                                                <a href="#"
-                                                    class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Edit</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"
-                                                    class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Remove</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"
-                                                    class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Report</a>
-                                            </li>
-                                        </ul>
+                                    <?php if ($comment['user_id'] === session('user_id') || $blog['user_id'] === session('user_id')): ?>
+                                    <div>
+                                        <button id="dropdownCommentButton1" 
+                                            class="dropdown-comment-button inline-flex items-center p-2 text-sm font-medium text-center  rounded-lg ocus:ring-4 focus:outline-none  text-gray-400 bg-gray-900 hover:bg-gray-700 focus:ring-gray-600"
+                                            type="button">
+                                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                                                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                                            </svg>
+                                            <span class="sr-only">Comment settings</span>
+                                        </button>
+                                        <div id="dropdownComment1"
+                                            class="comment-dropdown hidden dropdown-menu absolute mt-2 z-10 w-36 rounded divide-y shadow bg-gray-700 divide-gray-600">
+                                            <ul class="py-1 text-sm  text-gray-200"
+                                                aria-labelledby="dropdownMenuIconHorizontalButton">
+                                                <li>
+                                                    <a href="#"
+                                                        class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Edit</a>
+                                                </li>
+                                                <li>
+                                                    <a href="<?= base_url('comments/delete/' . esc($comment['id'])) ?>"
+                                                        class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Remove</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"
+                                                        class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Report</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
+                                    <?php endif; ?>
                                 </footer>
                                 <p><?= esc($comment['comment']) ?></p>
                                 <div class="flex items-center mt-4 space-x-4">
@@ -133,19 +137,27 @@
     </div>
 </main>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dropdownMenuIconButton = document.getElementById('dropdownMenuIconButton');
-        const dropdownDotsHorizontal = document.getElementById('dropdownDotsHorizontal');
-        
-        dropdownMenuIconButton.addEventListener('click', function() {
-            dropdownDotsHorizontal.classList.toggle('hidden');
-        });
+    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('click', function (event) {
+        const target = event.target;
 
-        document.addEventListener('click', function(event) {
-            if (!dropdownMenuIconButton.contains(event.target)) {
-                dropdownDotsHorizontal.classList.add('hidden');
-            }
-        });
+        // Blog dropdown
+        if (target.closest('#dropdownMenuIconButton')) {
+            const dropdownMenu = document.getElementById('dropdownDotsHorizontal');
+            dropdownMenu?.classList.toggle('hidden');
+        } else {
+            document.getElementById('dropdownDotsHorizontal')?.classList.add('hidden');
+        }
+
+        // Comment dropdown
+        if (target.closest('.dropdown-comment-button')) {
+            const dropdown = target.closest('.dropdown-comment-button')?.nextElementSibling;
+            dropdown?.classList.toggle('hidden');
+        } else {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.add('hidden'));
+        }
     });
+});
+
 </script>
 <?= $this->endSection() ?>
