@@ -34,10 +34,9 @@ class BlogController extends Controller
             'user_id'     => session()->get('user_id'),
             'category_id' => $this->request->getPost('category_id'),
         ];
-
         $blogModel->insert($data);
 
-        return redirect()->to('/blogs');
+        return redirect()->to('/');
     }
 
     public function edit($id)
@@ -77,8 +76,19 @@ class BlogController extends Controller
     public function show($id)
     {
         $blogModel = new BlogModel();
-        $data['blog'] = $blogModel->find($id);
+        $data['blog'] = $blogModel->getBlogById($id);
 
         return view('blogs/show', $data);
     }
+
+    public function myBlogs()
+{
+    $userId = session()->get('user_id');
+
+    $blogModel = new BlogModel();
+    $data['blogs'] = $blogModel->where('user_id', $userId)->findAll();
+
+    return view('blogs', $data);
+}
+
 }
