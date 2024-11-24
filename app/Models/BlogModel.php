@@ -10,7 +10,7 @@ class BlogModel extends Model
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
-    protected $allowedFields = ['title', 'content', 'user_id', 'category_id', 'created_at', 'updated_at'];
+    protected $allowedFields = ['title', 'image_path', 'content', 'user_id', 'category_id', 'created_at', 'updated_at'];
 
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
@@ -19,7 +19,7 @@ class BlogModel extends Model
 
     public function getAllBlogs()
     {
-        return $this->select('blogs.id, blogs.title, blogs.content, blogs.created_at, blogs.updated_at, users.username AS author, categories.name AS category, COUNT(comments.id) AS NbComment')
+        return $this->select('blogs.id, blogs.title, blogs.image_path, blogs.content, blogs.created_at, blogs.updated_at, users.username AS author, categories.name AS category, COUNT(comments.id) AS NbComment')
             ->join('users', 'users.id = blogs.user_id')
             ->join('categories', 'categories.id = blogs.category_id', 'left')
             ->join('comments', 'comments.blog_id = blogs.id', 'left')
@@ -30,7 +30,7 @@ class BlogModel extends Model
 
     public function getMyBlogs($userId)
     {
-        return $this->select('blogs.id, blogs.title, blogs.content, blogs.created_at, blogs.updated_at, users.username AS author, categories.name AS category, COUNT(comments.id) AS NbComment')
+        return $this->select('blogs.id, blogs.title, blogs.image_path, blogs.content, blogs.created_at, blogs.updated_at, users.username AS author, categories.name AS category, COUNT(comments.id) AS NbComment')
             ->join('users', 'users.id = blogs.user_id')
             ->join('categories', 'categories.id = blogs.category_id', 'left')
             ->join('comments', 'comments.blog_id = blogs.id', 'left')
@@ -41,28 +41,30 @@ class BlogModel extends Model
     }
 
     public function getBlogById($id)
-    {
-        
-        $blog = $this->select('blogs.*, users.username AS author, categories.name AS category, COUNT(comments.id) AS NbComment')
-            ->join('users', 'users.id = blogs.user_id')
-            ->join('categories', 'categories.id = blogs.category_id', 'left')
-            ->join('comments', 'comments.blog_id = blogs.id', 'left')
-            ->where('blogs.id', $id)
-            ->first();
+{
+    $blog = $this->select('blogs.*, users.username AS author, categories.name AS category, COUNT(comments.id) AS NbComment')
+        ->join('users', 'users.id = blogs.user_id', 'inner') 
+        ->join('categories', 'categories.id = blogs.category_id', 'left')
+        ->join('comments', 'comments.blog_id = blogs.id', 'left')
+        ->where('blogs.id', $id)
+        ->groupBy('blogs.id')
+        ->first();
 
-        
-        if ($blog) {
-            $db = \Config\Database::connect();
-            $comments = $db->table('comments')
-                ->select('comments.*, users.username AS commenter')
-                ->join('users', 'users.id = comments.user_id')
-                ->where('comments.blog_id', $id)
-                ->get()
-                ->getResultArray();
-
-            $blog['comments'] = $comments;
-        }
-
-        return $blog;
+    if (!$blog) {
+        return null;
     }
+
+    $db = \Config\Database::connect();
+    $comments = $db->table('comments')
+        ->select('comments.*, users.username AS commenter')
+        ->join('users', 'users.id = comments.user_id')
+        ->where('comments.blog_id', $id)
+        ->get()
+        ->getResultArray();
+
+    $blog['comments'] = $comments;
+
+    return $blog;
+}
+
 }
