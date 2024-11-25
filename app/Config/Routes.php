@@ -20,9 +20,9 @@ $routes->get('/myBlogs', 'DashboardController::myBlogs', ['filter' => 'auth']);
 $routes->group('blogs', ['filter' => 'auth'], function($routes) {
   $routes->get('create', 'BlogController::create');
   $routes->post('store', 'BlogController::store');
-  // $routes->get('/edit/(:num)', 'BlogController::edit/$1');
-  // $routes->post('/update/(:num)', 'BlogController::update/$1');
-  // $routes->get('/delete/(:num)', 'BlogController::delete/$1');
+  $routes->get('edit/(:num)', 'BlogController::edit/$1');
+  $routes->post('update/(:num)', 'BlogController::update/$1');
+  $routes->get('delete/(:num)', 'BlogController::delete/$1');
   $routes->get('show/(:num)', 'BlogController::show/$1');
 });
 
