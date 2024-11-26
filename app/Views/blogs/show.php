@@ -36,25 +36,22 @@
                             <div id="dropdownDotsHorizontal" class="z-10 hidden mt-2 absolute rounded-lg shadow w-44 bg-gray-700 divide-gray-600">
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
                                     <li>
-                                        <a href="#" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Dashboard</a>
+                                        <a href="<?= base_url('blogs/edit/' . $blog['id']); ?>" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Edit</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Earnings</a>
+                                        <a href="<?= base_url('blogs/delete/' . $blog['id']); ?>" class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white">Remove</a>
                                     </li>
                                 </ul>
-                                <div class="py-2">
-                                    <a href="#" class="block px-4 py-2 text-sm  hover:bg-gray-600 text-gray-200 hover:text-white">Separated link</a>
-                                </div>
                             </div>
                         </div>
                     <?php endif; ?>
                 </address>
                 <h1 class="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl text-white"><?= esc($blog['title']); ?></h1>
             </header>
-            <p><?= esc($blog['content']); ?></p>
+            <?php if ($blog['image_path']): ?>
+                <img src="<?= base_url($blog['image_path']) ?>" alt="Blog Image" class="img-fluid">
+            <?php endif; ?>
+            <p class="text-xl font-medium"><?= esc($blog['content']); ?></p>
             <section class="not-format">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-lg lg:text-lg font-bold text-gray-300">Discussion (<?= esc($blog['NbComment']) ?>)</h2>
@@ -86,34 +83,34 @@
                                                 title="February 8th, 2022"><?= esc($comment['created_at']); ?></time></p>
                                     </div>
                                     <?php if ($comment['user_id'] === session('user_id') || $blog['user_id'] === session('user_id')): ?>
-                                    <div>
-                                        <button id="dropdownCommentButton1" 
-                                            class="dropdown-comment-button inline-flex items-center p-2 text-sm font-medium text-center  rounded-lg ocus:ring-4 focus:outline-none  text-gray-400 bg-gray-900 hover:bg-gray-700 focus:ring-gray-600"
-                                            type="button">
-                                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                                                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                                            </svg>
-                                            <span class="sr-only">Comment settings</span>
-                                        </button>
-                                        <div id="dropdownComment1"
-                                            class="comment-dropdown hidden dropdown-menu absolute mt-2 z-10 w-36 rounded divide-y shadow bg-gray-700 divide-gray-600">
-                                            <ul class="py-1 text-sm  text-gray-200"
-                                                aria-labelledby="dropdownMenuIconHorizontalButton">
-                                                <li>
-                                                    <a href="#"
-                                                        class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Edit</a>
-                                                </li>
-                                                <li>
-                                                    <a href="<?= base_url('comments/delete/' . esc($comment['id'])) ?>"
-                                                        class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Remove</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"
-                                                        class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Report</a>
-                                                </li>
-                                            </ul>
+                                        <div>
+                                            <button id="dropdownCommentButton1"
+                                                class="dropdown-comment-button inline-flex items-center p-2 text-sm font-medium text-center  rounded-lg ocus:ring-4 focus:outline-none  text-gray-400 bg-gray-900 hover:bg-gray-700 focus:ring-gray-600"
+                                                type="button">
+                                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                                                    <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                                                </svg>
+                                                <span class="sr-only">Comment settings</span>
+                                            </button>
+                                            <div id="dropdownComment1"
+                                                class="comment-dropdown hidden dropdown-menu absolute mt-2 z-10 w-36 rounded divide-y shadow bg-gray-700 divide-gray-600">
+                                                <ul class="py-1 text-sm  text-gray-200"
+                                                    aria-labelledby="dropdownMenuIconHorizontalButton">
+                                                    <li>
+                                                        <a href="#"
+                                                            class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Edit</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="<?= base_url('comments/delete/' . esc($comment['id'])) ?>"
+                                                            class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Remove</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#"
+                                                            class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Report</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
                                     <?php endif; ?>
                                 </footer>
                                 <p><?= esc($comment['comment']) ?></p>
@@ -137,27 +134,26 @@
     </div>
 </main>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    document.addEventListener('click', function (event) {
-        const target = event.target;
+    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('click', function(event) {
+            const target = event.target;
 
-        // Blog dropdown
-        if (target.closest('#dropdownMenuIconButton')) {
-            const dropdownMenu = document.getElementById('dropdownDotsHorizontal');
-            dropdownMenu?.classList.toggle('hidden');
-        } else {
-            document.getElementById('dropdownDotsHorizontal')?.classList.add('hidden');
-        }
+            // Blog dropdown
+            if (target.closest('#dropdownMenuIconButton')) {
+                const dropdownMenu = document.getElementById('dropdownDotsHorizontal');
+                dropdownMenu?.classList.toggle('hidden');
+            } else {
+                document.getElementById('dropdownDotsHorizontal')?.classList.add('hidden');
+            }
 
-        // Comment dropdown
-        if (target.closest('.dropdown-comment-button')) {
-            const dropdown = target.closest('.dropdown-comment-button')?.nextElementSibling;
-            dropdown?.classList.toggle('hidden');
-        } else {
-            document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.add('hidden'));
-        }
+            // Comment dropdown
+            if (target.closest('.dropdown-comment-button')) {
+                const dropdown = target.closest('.dropdown-comment-button')?.nextElementSibling;
+                dropdown?.classList.toggle('hidden');
+            } else {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.add('hidden'));
+            }
+        });
     });
-});
-
 </script>
 <?= $this->endSection() ?>
