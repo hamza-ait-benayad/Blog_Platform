@@ -16,6 +16,7 @@ $routes->get('auth/resetPassword', 'AuthController::showResetForm');
 $routes->post('auth/resetPassword', 'AuthController::resetPassword');
 $routes->get('/', 'DashboardController::index', ['filter' => 'auth']);
 $routes->get('/myBlogs', 'DashboardController::myBlogs', ['filter' => 'auth']);
+$routes->get('/byCategory/(:num)', 'DashboardController::getBlogsByCategory/$1', ['filter' => 'auth']);
 
 $routes->group('blogs', ['filter' => 'auth'], function($routes) {
   $routes->get('create', 'BlogController::create');
