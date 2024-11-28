@@ -23,10 +23,21 @@ class BlogModel extends Model
             ->join('users', 'users.id = blogs.user_id')
             ->join('categories', 'categories.id = blogs.category_id', 'left')
             ->join('comments', 'comments.blog_id = blogs.id', 'left')
-            ->groupBy('blogs.id, blogs.title, blogs.content, blogs.created_at, blogs.updated_at, users.username, categories.name') // Include all selected columns
-            ->orderBy('blogs.created_at', 'DESC')
-            ->findAll();
+            ->groupBy('blogs.id, blogs.title, blogs.content, blogs.created_at, blogs.updated_at, users.username, categories.name, blogs.image_path') // Include all selected columns
+            ->orderBy('blogs.created_at', 'DESC');
     }
+
+    public function getBlogsByCategory($categoryId)
+    {
+        return $this->select('blogs.id, blogs.title, blogs.image_path, blogs.content, blogs.created_at, blogs.updated_at, users.username AS author, categories.name AS category, COUNT(comments.id) AS NbComment')
+            ->join('users', 'users.id = blogs.user_id')
+            ->join('categories', 'categories.id = blogs.category_id', 'left')
+            ->join('comments', 'comments.blog_id = blogs.id', 'left')
+            ->where('blogs.category_id', $categoryId)
+            ->groupBy('blogs.id, blogs.title, blogs.content, blogs.created_at, blogs.updated_at, users.username, categories.name, blogs.image_path') // Include all selected columns
+            ->orderBy('blogs.created_at', 'DESC');
+    }
+    
 
     public function getMyBlogs($userId)
     {
@@ -36,8 +47,7 @@ class BlogModel extends Model
             ->join('comments', 'comments.blog_id = blogs.id', 'left')
             ->where('blogs.user_id', $userId)
             ->groupBy('blogs.id, blogs.title, blogs.content, blogs.created_at, blogs.updated_at, users.username, categories.name') // Include all selected columns
-            ->orderBy('blogs.created_at', 'DESC')
-            ->findAll();
+            ->orderBy('blogs.created_at', 'DESC');
     }
 
     public function getBlogById($id)
