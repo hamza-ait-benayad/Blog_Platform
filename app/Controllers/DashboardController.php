@@ -13,7 +13,7 @@ class DashboardController extends BaseController
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->getAllCategories();
 
-        $perPage = 1;
+        $perPage = 10;
 
         $blogs = $blogModel->getAllBlogs()->paginate($perPage, 'default');
         $pager = $blogModel->pager;
@@ -28,6 +28,8 @@ class DashboardController extends BaseController
     public function myBlogs(): string
     {
         $blogModel = new BlogModel();
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getAllCategories();
 
         $perPage = 10;
 
@@ -37,7 +39,8 @@ class DashboardController extends BaseController
 
         return view('dashboard', [
             'blogs' => $blogs,
-            'pager' => $pager
+            'pager' => $pager,
+            'categories' => $categories
         ]);    
     }
     
