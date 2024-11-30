@@ -75,13 +75,13 @@ class AuthController extends Controller
             $user = $userModel->where('email', $email)->first();
 
             if ($user) {
-                $token = bin2hex(random_bytes(16)); // Generate reset token
+                $token = bin2hex(random_bytes(16));
                 $userModel->saveResetToken($email, $token);
 
                 $resetLink = base_url("auth/resetPassword?token=$token");
 
                 $emailService = \Config\Services::email();
-                $emailService->setFrom('hamza.aitbenayad.32@edu.uiz.ac.ma', 'YourAppName');
+                $emailService->setFrom('exemple@gmail.com', 'YourAppName');
                 $emailService->setTo($email);
                 $emailService->setSubject('Password Reset Request');
                 $emailService->setMessage("Click here to reset your password: <a href='$resetLink'>$resetLink</a>");
