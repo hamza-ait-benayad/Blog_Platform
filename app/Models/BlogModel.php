@@ -64,13 +64,8 @@ class BlogModel extends Model
         return null;
     }
 
-    $db = \Config\Database::connect();
-    $comments = $db->table('comments')
-        ->select('comments.*, users.username AS commenter')
-        ->join('users', 'users.id = comments.user_id')
-        ->where('comments.blog_id', $id)
-        ->get()
-        ->getResultArray();
+    $commentsModels = new CommentModel();
+    $comments = $commentsModels->getCommentsByBlog($id);
 
     $blog['comments'] = $comments;
 

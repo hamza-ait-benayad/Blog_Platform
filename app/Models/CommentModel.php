@@ -25,10 +25,26 @@ class CommentModel extends Model
      */
     public function getCommentsByBlog($blogId)
     {
-        return $this->where('blog_id', $blogId)
-                    ->join('users', 'users.id = comments.user_id')
-                    ->orderBy('comments.created_at', 'DESC')
+        $comments = $this
+            ->select('comments.*, users.username AS commenter')
+            ->join('users', 'users.id = comments.user_id')
+            ->orderBy('comments.created_at', 'DESC')
+            ->where('blog_id', $blogId)
+            ->get()
+            ->getResultArray();
+
+            $replyModel = new \App\Models\ReplyModel();
+
+            foreach ($comments as &$comment) {
+                $comment['replies'] = $replyModel
+                ->select('replies.*, users.username AS replier')
+                ->join('users', 'users.id = replies.user_id')
+                ->where('comment_id', $comment['id'])
+                    ->orderBy('created_at', 'ASC')
                     ->findAll();
+            }
+        
+        return $comments;
     }
 
     /**
@@ -37,11 +53,5 @@ class CommentModel extends Model
      * @param int $userId
      * @return array
      */
-    public function getCommentsByUser($userId)
-    {
-        return $this->where('user_id', $userId)
-                    ->join('blogs', 'blogs.id = comments.blog_id')
-                    ->orderBy('comments.created_at', 'DESC')
-                    ->findAll();
-    }
+
 }

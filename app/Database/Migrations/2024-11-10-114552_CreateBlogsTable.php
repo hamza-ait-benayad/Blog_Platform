@@ -22,6 +22,11 @@ class CreateBlogsTable extends Migration
             'content' => [
                 'type' => 'TEXT',
             ],
+            'image_path' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+                'null'       => true, 
+            ],
             'user_id' => [
                 'type'       => 'INT',
                 'unsigned'   => true,

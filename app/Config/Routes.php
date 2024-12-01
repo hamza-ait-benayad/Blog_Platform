@@ -30,6 +30,7 @@ $routes->group('blogs', ['filter' => 'auth'], function($routes) {
 $routes->group('comments', ['filter' => 'auth'], function($routes) {
   $routes->post('store/(:num)', 'CommentController::store/$1');
   $routes->get('delete/(:num)', 'CommentController::delete/$1');
+  $routes->post('addReplay', 'CommentController::addReply');
 });
 
 

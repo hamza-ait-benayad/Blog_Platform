@@ -22,7 +22,7 @@ class BlogController extends Controller
             'title'       => 'required|min_length[3]|max_length[255]',
             'content'     => 'required|min_length[10]',
             'category_id' => 'required|is_natural_no_zero',
-            'image'       => 'permit_empty|is_image[image]|max_size[image,2048]|mime_in[image,image/jpg,image/jpeg,image/png]', // Image validation
+            'image'       => 'permit_empty|is_image[image]|max_size[image,2048]|mime_in[image,image/jpg,image/jpeg,image/png]',
         ];
 
         if (!$this->validate($rules)) {
