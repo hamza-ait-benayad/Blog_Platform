@@ -23,13 +23,13 @@
             </div>
           </div>
         </address>
-        <h1 class="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl text-white"><?= $blog['title'] ?></h1>
-      </header>
+        <h1 class="mb-4 text-3xl font-bold leading-tight text-white"><?= strtoupper($blog['title']) ?></h1>
+        </header>
       <body>
         <?php if ($blog['image_path'] !== NULL): ?>
           <img src="<?= base_url($blog['image_path']) ?>" alt="Blog Image" class="img-fluid">
         <?php endif; ?>
-        <p class="text-xl font-medium"><?= esc($blog['content']); ?></p>
+        <p class="text-xl font-medium textFont"><?= nl2br(esc($blog['content'])); ?></p>
       </body>
       <footer class="mt-6 flex w-full justify-end items-center gap-5">
         <div class="flex items-center text-gray-500">
