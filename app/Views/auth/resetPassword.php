@@ -41,12 +41,13 @@ Reset Password
                 </div>
                 <form method="post" class="space-y-4 md:space-y-6" action="/auth/resetPassword">
                     <?= csrf_field(); ?>
+                    <input type="hidden" name="token" value="<?= $token ?>">
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium  text-white">Password</label>
                         <input type="password" name="password" id="password" placeholder="••••••••" class=" border  rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium  text-white">Password</label>
+                        <label for="password" class="block mb-2 text-sm font-medium  text-white">Password Confirmation</label>
                         <input type="password" name="password_confirmation" id="password" placeholder="••••••••" class=" border  rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <?php if (session()->getFlashdata('error')): ?>
@@ -60,12 +61,9 @@ Reset Password
                             </div>
                         </div>
                     <?php endif; ?>
-                    <div class="flex items-center justify-between">
-                        <a href="#" class="text-sm font-medium  hover:underline text-primary-500">Forgot password?</a>
-                    </div>
-                    <button type="submit" class="w-full text-black   focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">Sign in</button>
+                    <button type="submit" class="w-full text-black focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">Reset</button>
                     <p class="text-sm font-light  text-gray-400">
-                        Don’t have an account yet? <a href="/auth/register" class="font-medium hover:underline text-primary-500">Sign up</a>
+                    <a href="/auth/register" class="font-medium hover:underline text-primary-500"> Login Page </a>
                     </p>
                 </form>
             </div>

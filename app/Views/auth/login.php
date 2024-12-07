@@ -22,7 +22,7 @@ Login
                                 </svg>
                                 <span class="sr-only">Info</span>
                                 <div>
-                                    <span class="font-medium"><?= esc($error); ?></span>
+                                    <span class="font-medium"> <?= esc($error); ?></span>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -34,7 +34,7 @@ Login
                             </svg>
                             <span class="sr-only">Info</span>
                             <div>
-                                <span class="font-medium">Success alert! </span> <?= session()->getFlashdata('success'); ?>
+                                <span class="font-medium"> <?= session()->getFlashdata('success'); ?> </span> 
                             </div>
                         </div>
                     <?php endif; ?>
