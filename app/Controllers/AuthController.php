@@ -75,16 +75,26 @@ class AuthController extends Controller
             $user = $userModel->where('email', $email)->first();
 
             if ($user) {
+                $emailService = \Config\Services::email();
                 $token = bin2hex(random_bytes(16));
                 $userModel->saveResetToken($email, $token);
 
-                $resetLink = base_url("auth/resetPassword?token=$token");
+                $resetLink = base_url("auth/resetPassword") . "?token=" . urlencode($token);
 
-                $emailService = \Config\Services::email();
-                $emailService->setFrom('exemple@gmail.com', 'YourAppName');
+
+                $templateData = [
+                    'name' => $user['username'], 
+                    'resetLink' => $resetLink,
+                    'logo' => base_url('public/assets/logo3.svg'),
+                ];
+
+
+                $message = view('email_template', $templateData);
+
+                $emailService->setFrom(getenv('email_serve'), 'Blog App');
                 $emailService->setTo($email);
                 $emailService->setSubject('Password Reset Request');
-                $emailService->setMessage("Click here to reset your password: <a href='$resetLink'>$resetLink</a>");
+                $emailService->setMessage($message);
 
                 if (!$emailService->send()) {
                     log_message('error', 'Failed to send email: ' . $emailService->printDebugger(['headers']));
@@ -107,15 +117,17 @@ class AuthController extends Controller
         $passwordConfirmation = $this->request->getPost('password_confirmation');
 
         if ($newPassword !== $passwordConfirmation) {
-            return redirect()->back()->with('error', 'Passwords do not match.');
+            return redirect()->back()->with('errors', 'Passwords do not match.');
         }
 
         $userModel = new UserModel();
         $user = $userModel->verifyResetToken($token);
 
         if (!$user) {
-            return redirect()->to('auth/login')->with('error', 'Invalid or expired token.');
+            log_message('error', 'Token verification failed for token: ' . $token);
+            return redirect()->to('auth/login')->with('errors', 'Invalid or expired token.');
         }
+
 
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         $userModel->update($user['id'], [
@@ -124,7 +136,7 @@ class AuthController extends Controller
             'token_expiry' => null,
         ]);
 
-        return redirect()->to('auth/login')->with('message', 'Password reset successfully.');
+        return redirect()->to('auth/login')->with('success', 'Password reset successfully.');
     }
 
     public function showResetForm()
@@ -136,7 +148,6 @@ class AuthController extends Controller
         if (!$user) {
             return redirect()->to('auth/login')->with('error', 'Invalid or expired token.');
         }
-
-        return view('resetPassword', ['token' => $token]);
+        return view('auth/resetPassword', ['token' => $token]);
     }
 }
