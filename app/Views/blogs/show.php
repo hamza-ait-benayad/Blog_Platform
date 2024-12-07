@@ -57,6 +57,7 @@
                     <h2 class="text-lg lg:text-lg font-bold text-gray-300">Discussion (<?= esc($blog['NbComment']) ?>)</h2>
                 </div>
                 <form class="mb-6" method="post" action="<?= base_url('comments/store/' . $blog['id']) ?>">
+                <?= csrf_field(); ?>
                     <div class="py-2 px-4 mb-4 rounded-lg rounded-t-lg bg-gray-800 ">
                         <label for="comment" class="sr-only">Your comment</label>
                         <textarea id="comment" rows="6"
@@ -73,9 +74,9 @@
                     <ul>
                         <?php foreach ($blog['comments'] as $comment): ?>
                             <article class="p-6 mb-6 text-base rounded-lg bg-gray-900">
-                                <footer class="flex justify-between items-center mb-2">
+                                <div class="flex justify-between items-center mb-2">
                                     <div class="flex items-center">
-                                        <p class="inline-flex items-center mr-3 font-semibold text-sm text-gray-400"><img
+                                        <p class="inline-flex items-center mr-3 font-semibold text-sm text-gray-500"><img
                                                 class="mr-2 w-6 h-6 rounded-full"
                                                 src="/assets/utilisateur.png"
                                                 alt="Michael Gough"><?= esc($comment['commenter']); ?></p>
@@ -104,24 +105,42 @@
                                                         <a href="<?= base_url('comments/delete/' . esc($comment['id'])) ?>"
                                                             class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Remove</a>
                                                     </li>
-                                                    <li>
-                                                        <a href="#"
-                                                            class="block py-2 px-4  hover:bg-gray-600 hover:text-white">Report</a>
-                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     <?php endif; ?>
-                                </footer>
-                                <p><?= esc($comment['comment']) ?></p>
-                                <div class="flex items-center mt-4 space-x-4">
-                                    <button type="button"
-                                        class="flex items-center font-medium text-sm  hover:underline text-gray-400">
-                                        <svg class="mr-1.5 w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                                            <path d="M18 0H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2v4a1 1 0 0 0 1.707.707L10.414 13H18a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5 4h2a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2ZM5 4h5a1 1 0 1 1 0 2H5a1 1 0 0 1 0-2Zm2 5H5a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Zm9 0h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z" />
-                                        </svg>
-                                        Reply
-                                    </button>
+                                </div>
+                                <p class="ml-8 text-gray-300"><?= esc($comment['comment']) ?></p>
+                                <hr class="border-gray-600 mt-5">
+                                <div class="ml-10">
+                                    <?php if (!empty($comment['replies'])): ?>
+                                        <div class="flex flex-col gap-5 mt-8">
+                                            <?php foreach ($comment['replies'] as $reply): ?>
+                                                <div>
+                                                    <div class="flex items-center">
+                                                        <p class="inline-flex items-center mr-3 font-semibold text-sm text-gray-500"><img
+                                                                class="mr-2 w-6 h-6 rounded-full"
+                                                                src="/assets/utilisateur.png"
+                                                                alt="Michael Gough"><?= esc($reply['replier']); ?></p>
+                                                        <p class="text-sm text-gray-600 "><time pubdate datetime="2022-02-08"
+                                                                title="February 8th, 2022"><?= esc($reply['created_at']); ?></time></p>
+                                                    </div>
+                                                    <p class="ml-8 text-gray-300"> <?= $reply['content']; ?></p>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <form action="/comments/addReplay" method="post" class="flex items-center gap-5 w-full mt-8">
+                                        <?= csrf_field(); ?>
+                                        <input type="hidden" name="blog_id" value="<?= $blog['id']; ?>">
+                                        <input type="hidden" name="comment_id" value="<?= $comment['id']; ?>">
+                                        <textarea
+                                            class="p-2 w-full text-sm text-whiteborder-0 focus:ring-0 border-none  placeholder-gray-400 bg-gray-800 rounded-lg"
+                                            name="content" placeholder="Write a reply..." required></textarea>
+                                        <button
+                                            class="inline-flex items-center py-2 px-3 text-xs font-medium text-center text-black bg-primary-500 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-900"
+                                            type="submit">Reply</button>
+                                    </form>
                                 </div>
                             </article>
                         <?php endforeach; ?>
