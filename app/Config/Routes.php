@@ -14,9 +14,9 @@ $routes->get('auth/forgotPassword', 'AuthController::forgotPassword');
 $routes->post('auth/forgotPassword', 'AuthController::forgotPassword');
 $routes->get('auth/resetPassword', 'AuthController::showResetForm');
 $routes->post('auth/resetPassword', 'AuthController::resetPassword');
-$routes->get('/', 'DashboardController::index', ['filter' => 'auth']);
+$routes->get('/', 'DashboardController::index');
 $routes->get('/myBlogs', 'DashboardController::myBlogs', ['filter' => 'auth']);
-$routes->get('/byCategory/(:num)', 'DashboardController::getBlogsByCategory/$1', ['filter' => 'auth']);
+$routes->get('/byCategory/(:num)', 'DashboardController::getBlogsByCategory/$1');
 
 $routes->group('blogs', ['filter' => 'auth'], function($routes) {
   $routes->get('create', 'BlogController::create');
@@ -34,3 +34,4 @@ $routes->group('comments', ['filter' => 'auth'], function($routes) {
 });
 
 
+$routes->get('/email', 'DashboardController::emailTemp');
