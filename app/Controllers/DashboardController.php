@@ -12,6 +12,7 @@ class DashboardController extends BaseController
         $blogModel = new BlogModel();
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->getAllCategories();
+        $popularBlogs = $blogModel->getPopularBlogs();
 
         $perPage = 10;
 
@@ -21,7 +22,8 @@ class DashboardController extends BaseController
         return view('dashboard', [
             'blogs' => $blogs,
             'pager' => $pager,
-            'categories' => $categories
+            'categories' => $categories,
+            'popularBlogs' => $popularBlogs
         ]);
     }
 
@@ -30,6 +32,7 @@ class DashboardController extends BaseController
         $blogModel = new BlogModel();
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->getAllCategories();
+        $popularBlogs = $blogModel->getPopularBlogs();
 
         $perPage = 10;
 
@@ -40,15 +43,17 @@ class DashboardController extends BaseController
         return view('dashboard', [
             'blogs' => $blogs,
             'pager' => $pager,
-            'categories' => $categories
-        ]);    
+            'categories' => $categories,
+            'popularBlogs' => $popularBlogs
+        ]);
     }
-    
+
     public function getBlogsByCategory($categoryId): string
     {
         $blogModel = new BlogModel();
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->getAllCategories();
+        $popularBlogs = $blogModel->getPopularBlogs();
 
         $perPage = 10;
 
@@ -58,7 +63,8 @@ class DashboardController extends BaseController
         return view('dashboard', [
             'blogs' => $blogs,
             'pager' => $pager,
-            'categories' => $categories
+            'categories' => $categories,
+            'popularBlogs' => $popularBlogs,
         ]);
     }
 }
