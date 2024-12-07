@@ -53,7 +53,7 @@ class BlogModel extends Model
     public function getBlogById($id)
 {
     $blog = $this->select('blogs.*, users.username AS author, categories.name AS category, COUNT(comments.id) AS NbComment')
-        ->join('users', 'users.id = blogs.user_id', 'inner') 
+        ->join('users', 'users.id = blogs.user_id', 'inner')
         ->join('categories', 'categories.id = blogs.category_id', 'left')
         ->join('comments', 'comments.blog_id = blogs.id', 'left')
         ->where('blogs.id', $id)
@@ -71,5 +71,17 @@ class BlogModel extends Model
 
     return $blog;
 }
+
+public function getPopularBlogs($limit = 10)
+{
+    return $this->select('blogs.*, COUNT(comments.id) as comment_count, users.username AS author')
+                ->join('users', 'users.id = blogs.user_id', 'inner')
+                ->join('comments', 'comments.blog_id = blogs.id', 'left')
+                ->groupBy('blogs.id')
+                ->orderBy('comment_count', 'DESC')
+                ->limit($limit)
+                ->findAll();
+}
+
 
 }
