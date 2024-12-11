@@ -65,44 +65,48 @@ class BlogController extends Controller
     }
 
     public function update($id)
-    {
-        $blogModel = new BlogModel();
-        $validation = \Config\Services::validation();
+{
+    $blogModel = new BlogModel();
+    $validation = \Config\Services::validation();
 
-        $rules = [
-            'title'       => 'required|min_length[3]|max_length[255]',
-            'content'     => 'required|min_length[10]',
-            'category_id' => 'required|is_not_unique[categories.id]',
-            'image'       => 'permit_empty|is_image[image]|max_size[image,2048]|mime_in[image,image/jpg,image/jpeg,image/png]',
-        ];
+    $rules = [
+        'title'       => 'required|min_length[3]|max_length[255]',
+        'content'     => 'required|min_length[10]',
+        'category_id' => 'required|is_not_unique[categories.id]',
+        'image'       => 'permit_empty|is_image[image]|max_size[image,2048]|mime_in[image,image/jpg,image/jpeg,image/png]',
+    ];
 
-        if (!$this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-        }
-
-        $blog = $blogModel->find($id);
-
-        $data = [
-            'title'       => $this->request->getPost('title'),
-            'content'     => $this->request->getPost('content'),
-            'category_id' => $this->request->getPost('category_id'),
-        ];
-
-        $image = $this->request->getFile('image');
-        if ($image && $image->isValid()) {
-            if (!empty($blog['image_path'])) {
-                unlink(WRITEPATH . 'uploads/blogs/' . $blog['image_path']);
-            }
-            $imageName = $image->getRandomName();
-            $image->move(WRITEPATH . 'uploads/blogs', $imageName);
-
-            $data['image_path'] = 'uploads/blogs/' . $imageName;
-        }
-
-        $blogModel->update($id, $data);
-
-        return redirect()->to('/myBlogs')->with('success', 'Blog updated successfully');
+    if (!$this->validate($rules)) {
+        return redirect()->back()->withInput()->with('errors', $validation->getErrors());
     }
+
+    $blog = $blogModel->find($id);
+    if (!$blog) {
+        return redirect()->to('/myBlogs')->with('error', 'Blog not found.');
+    }
+
+    $data = [
+        'title'       => $this->request->getPost('title'),
+        'content'     => $this->request->getPost('content'),
+        'category_id' => $this->request->getPost('category_id'),
+    ];
+
+    $image = $this->request->getFile('image');
+    if ($image && $image->isValid()) {
+        if ($blog['image_path'] && file_exists(FCPATH . $blog['image_path'])) {
+            unlink(FCPATH . $blog['image_path']);
+        }
+
+        $imageName = $image->getRandomName();
+        $image->move(FCPATH . 'uploads/blogs', $imageName);
+
+        $data['image_path'] = 'uploads/blogs/' . $imageName;
+    }
+
+    $blogModel->update($id, $data);
+
+    return redirect()->to('/myBlogs')->with('success', 'Blog updated successfully');
+}
 
 
     public function delete($id)

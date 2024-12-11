@@ -72,7 +72,7 @@ class BlogModel extends Model
     return $blog;
 }
 
-public function getPopularBlogs($limit = 10)
+public function getPopularBlogs($limit = 6)
 {
     return $this->select('blogs.*, COUNT(comments.id) as comment_count, users.username AS author')
                 ->join('users', 'users.id = blogs.user_id', 'inner')
