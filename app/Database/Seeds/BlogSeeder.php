@@ -3,29 +3,30 @@
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
+use Faker\Factory as Faker;
 
 class BlogSeeder extends Seeder
 {
     public function run()
     {
-        $data = [
-            [
-                'title'       => 'First Blog Post',
-                'content'     => 'Content of the first blog post',
-                'user_id'     => 1, // Assuming user with ID 1 exists
-                'category_id' => 1, // Technology
-            ],
-            [
-                'title'       => 'Healthy Living Tips',
-                'content'     => 'Content of the health blog post',
-                'user_id'     => 2, // Assuming user with ID 2 exists
-                'category_id' => 4, // Health
-            ],
-            // Add more sample blogs if needed
-        ];
+        $faker = Faker::create();
 
-        foreach ($data as $blog) {
-            $this->db->table('blogs')->insert($blog);
+        $data = [];
+        $userIds = range(1, 10);  
+        $categoryIds = range(1, 5); 
+
+        for ($i = 0; $i < 20; $i++) {
+            $data[] = [
+                'title'      => $faker->sentence(),
+                'content'    => $faker->paragraph(3),
+                'image_path' => '',
+                'user_id'    => $userIds[array_rand($userIds)],  
+                'category_id' => $categoryIds[array_rand($categoryIds)], 
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
         }
+
+        $this->db->table('blogs')->insertBatch($data);
     }
 }
