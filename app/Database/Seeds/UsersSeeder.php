@@ -3,38 +3,84 @@
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
-use CodeIgniter\Test\Fabricator;
-use App\Models\UserModel;
 
 class UsersSeeder extends Seeder
 {
     public function run()
     {
-        // Manually insert a few sample users
         $data = [
             [
-                'username'     => 'Admin User',
-                'email'    => 'admin@example.com',
-                'password' => password_hash('admin123', PASSWORD_DEFAULT),
+                'username'   => 'john_doe',
+                'email'      => 'john.doe@example.com',
+                'password'   => password_hash('password123', PASSWORD_DEFAULT),  // Example password
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'username'     => 'Regular User',
-                'email'    => 'user@example.com',
-                'password' => password_hash('user123', PASSWORD_DEFAULT),
+                'username'   => 'jane_doe',
+                'email'      => 'jane.doe@example.com',
+                'password'   => password_hash('password123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'username'   => 'michael_smith',
+                'email'      => 'michael.smith@example.com',
+                'password'   => password_hash('password123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'username'   => 'emily_johnson',
+                'email'      => 'emily.johnson@example.com',
+                'password'   => password_hash('password123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'username'   => 'chris_lee',
+                'email'      => 'chris.lee@example.com',
+                'password'   => password_hash('password123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'username'   => 'patricia_brown',
+                'email'      => 'patricia.brown@example.com',
+                'password'   => password_hash('password123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'username'   => 'david_wilson',
+                'email'      => 'david.wilson@example.com',
+                'password'   => password_hash('password123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'username'   => 'sarah_taylor',
+                'email'      => 'sarah.taylor@example.com',
+                'password'   => password_hash('password123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'username'   => 'daniel_thomas',
+                'email'      => 'daniel.thomas@example.com',
+                'password'   => password_hash('password123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'username'   => 'jessica_moore',
+                'email'      => 'jessica.moore@example.com',
+                'password'   => password_hash('password123', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ]
         ];
 
-        // Insert the users into the database
         $this->db->table('users')->insertBatch($data);
-
-        // Optionally, use a fabricator to create more random users (requires Fabricator)
-        $userModel = new UserModel();
-        $fabricator = new Fabricator($userModel);
-        
-        // Generate and insert 10 random users
-        for ($i = 0; $i < 10; $i++) {
-            $fabricatedUser = $fabricator->make();
-            $userModel->insert($fabricatedUser);
-        }
     }
 }
