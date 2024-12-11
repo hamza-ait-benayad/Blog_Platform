@@ -34,8 +34,8 @@ Dashboard
     </div>
     <div class="flex flex-row justify-center items-center ">
       <div
-        class="fixed left-5 top-40 w-[25%] h-[70%] rounded-lg flex gap-5 text-gray-400">
-        <div class="h-full w-1 bg-gray-400 rounded-lg">.</div>
+        class="fixed left-5 top-28 w-[25%] h-[70%] rounded-lg flex gap-5 text-gray-400">
+        <div class="h-full w-1 mt-10 bg-gray-400 rounded-lg">.</div>
         <div class="w-4/5">
           <h1 class="text-xl text-gray-200 font-bold text-center">Most Popular Blogs</h1>
           <hr class="border-gray-500 mt-2">
@@ -130,7 +130,7 @@ Dashboard
         <?php endif; ?>
       </div>
 
-      <div class="fixed right-20 top-40 px-5 py-5 w-1/5 border border-gray-400 rounded-lg flex flex-col gap-5 text-center">
+      <div class="fixed right-20 top-28 px-5 py-5 w-1/5 border border-gray-400 rounded-lg flex flex-col gap-5 text-center">
         <h2 class="text-2xl font-bold text-gray-400">Categories</h2>
         <hr>
         <ul action="" class=" flex gap-2 flex-col text-gray-400 justify-center">

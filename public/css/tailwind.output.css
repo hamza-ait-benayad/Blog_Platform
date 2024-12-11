@@ -1952,6 +1952,10 @@ input:checked + .toggle-bg {
   top: 3.5rem;
 }
 
+.top-28 {
+  top: 7rem;
+}
+
 .top-40 {
   top: 10rem;
 }
@@ -2563,14 +2567,14 @@ input:checked + .toggle-bg {
   background-color: rgb(255 242 225 / var(--tw-bg-opacity));
 }
 
-.bg-primary-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(234 216 192 / var(--tw-bg-opacity));
-}
-
 .bg-primary-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(209 187 158 / var(--tw-bg-opacity));
+}
+
+.bg-slate-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
 }
 
 .bg-white {
@@ -2580,11 +2584,6 @@ input:checked + .toggle-bg {
 
 .bg-white\/50 {
   background-color: rgb(255 255 255 / 0.5);
-}
-
-.bg-slate-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
 }
 
 .p-1 {
